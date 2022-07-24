@@ -16,7 +16,8 @@ public class Main {
             System.out.println("3. текущие затраты");
             System.out.println("4. потенциальные затраты");
             System.out.println("5. потенциальные доходы");
-            System.out.println("6. Выход");
+            System.out.println("6. Сумма кошельков и карт");
+            System.out.println("7. Выход");
             System.out.print("-> ");
             String selected = in.next();
             switch (selected) {
@@ -26,8 +27,9 @@ public class Main {
                 case "3" -> Costs.operatorCosts();
                 case "4" -> PotentialCosts.operatorPotentialCosts();
                 case "5" -> Incomes.operatorIncomes();
-                case "6" -> {
-                    in.close();
+                case "6" -> Menu.sumAll();
+                case "7" -> {
+                 //   in.close();
                     status = false;
                     break;
                 }

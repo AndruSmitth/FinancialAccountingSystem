@@ -7,14 +7,13 @@ import java.util.Scanner;
 
 public class CreditCards extends Money {
 
-    static String file;
+    static String file = "credit.txt";
     static ArrayList<Money> credit = new ArrayList<>();
     static Scanner in = new Scanner(System.in);
     static boolean status = true;
 
-    public CreditCards(String name, int sum) {
+    public CreditCards(String name, String sum) {
         super(name, sum);
-        this.file = "credit.txt";
     }
 
     public static void operatorCredit() throws IOException {
@@ -24,14 +23,15 @@ public class CreditCards extends Money {
         if (!files.exists()) {
             files.createNewFile();
         } else {
-            money.readWallets(credit);
+            money.readWallets(credit, file);
         }
 
         while (status) {
-            System.out.println("1. Добавления кошелька");
-            System.out.println("2. Удоление кошелька");
-            System.out.println("3. Редактирование кошелька");
-            System.out.println("4. Состояния кошелька");
+            System.out.println("Работа с картами: ");
+            System.out.println("1. Добавления карты");
+            System.out.println("2. Удоление карты");
+            System.out.println("3. Редактирование карты");
+            System.out.println("4. Состояния карты");
             System.out.println("5. Сохранение");
             System.out.println("6. Выход");
             System.out.print("-> ");
@@ -42,9 +42,9 @@ public class CreditCards extends Money {
                 case "2" -> Menu.delete(credit);
                 case "3" -> Menu.update(credit);
                 case "4" -> Menu.findAll(credit);
-                case "5" -> Menu.saveWallet(credit);
+                case "5" -> Menu.saveWallet(credit, file);
                 case "6" -> {
-                    in.close();
+                //    in.close();
                     status = false;
                     break;
                 }

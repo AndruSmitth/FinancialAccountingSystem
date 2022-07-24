@@ -7,15 +7,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Incomes extends Money {
-
+    static String file = "incomes.txt";
     static ArrayList<Money> incomes = new ArrayList<>(); //Доходы
     static Scanner sc = new Scanner(System.in);
     static int choice = 0;
-    static String file;
 
-    public Incomes(String name, int sum) {
+
+    public Incomes(String name, String sum) {
         super(name, sum);
-        this.file = "Incomes.txt";
     }
 
 
@@ -27,7 +26,7 @@ public class Incomes extends Money {
             if (!files.exists()) {
                 files.createNewFile();
             } else {
-                money.readWallets(incomes);
+                money.readWallets(incomes, file);
             }
 
             // простое меню
@@ -47,7 +46,7 @@ public class Incomes extends Money {
                 case 2 -> Menu.addWallet(incomes);     // Добавить
                 case 3 -> Menu.update(incomes);        // Редактировать
                 case 4 -> Menu.delete(incomes);        // Удалить
-                case 5 -> Menu.saveWallet(incomes);    // Сохранить
+                case 5 -> Menu.saveWallet(incomes, file);    // Сохранить
                 case 6 -> System.out.println("Bye");          // выход
                 default -> System.out.println("Invalid action");
             }

@@ -3,19 +3,17 @@ package com.company;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Costs extends Money {
-
+    static String file = "costs.txt";
     static ArrayList<Money> costs = new ArrayList<>(); //Расходы
     static Scanner sc = new Scanner(System.in);
     static int choice = 0;
-    static String file;
 
-    public Costs(String name, int sum) {
+
+    public Costs(String name, String sum) {
         super(name, sum);
-        this.file = "Costs.txt";
     }
 
 
@@ -29,11 +27,11 @@ public class Costs extends Money {
             if (!files.exists()) {
                 files.createNewFile();
             } else {
-                money.readWallets(costs);
+                money.readWallets(costs, file);
             }
 
             // простое меню
-            System.out.println("Текущие расходы: ");
+            System.out.println("Текущие затраты: ");
             System.out.println("1 - Посмотреть");
             System.out.println("2 - Добавить");
             System.out.println("3 - Редактировать");
@@ -49,12 +47,16 @@ public class Costs extends Money {
                 case 2 -> Menu.addWallet(costs);     // Добавить
                 case 3 -> Menu.update(costs);        // Редактировать
                 case 4 -> Menu.delete(costs);        // Удалить
-                case 5 -> Menu.saveWallet(costs);    // Сохранить
+                case 5 -> Menu.saveWallet(costs, file);    // Сохранить
                 case 6 -> System.out.println("Bye");          // выход
                 default -> System.out.println("Invalid action");
             }
         }
     }
 
+    @Override
+    public String toString() {
+        return "Costs{}";
+    }
 }
 

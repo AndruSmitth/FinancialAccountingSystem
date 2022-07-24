@@ -1,10 +1,10 @@
 package com.company;
 
-abstract class Money {
+class Money {
     private String name;  //Название
-    private int sum;      //сумма
+    private String sum;      //сумма
 
-    public Money(String name, int sum) {
+    public Money(String name, String sum) {
         this.name = name;
         this.sum = sum;
     }
@@ -17,11 +17,19 @@ abstract class Money {
         this.name = name;
     }
 
-    public int getSum() {
+    public String getSum() {
         return sum;
     }
 
-    public void setSum(int sum) {
+    public void setSum(String sum) {
         this.sum = sum;
+    }
+
+    @Override
+    public String toString() {
+        return "Money{" +
+                "Имя =' " + name + '\'' +
+                ", Сумма = " + sum +
+                '}' + "\n";
     }
 }

@@ -3,18 +3,17 @@ package com.company;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class PotentialCosts extends Money {
+    static String file = "potentialCosts.txt";
     static ArrayList<Money> potentialCosts = new ArrayList<>(); //Потенциальные затраты
     static Scanner sc = new Scanner(System.in);
     static int choice = 0;
-    static String file;
 
-    public PotentialCosts(String name, int sum) {
+
+    public PotentialCosts(String name, String sum) {
         super(name, sum);
-        this.file = "PotentialCosts.txt";
     }
 
 
@@ -26,7 +25,7 @@ public class PotentialCosts extends Money {
             if (!files.exists()) {
                 files.createNewFile();
             } else {
-                money.readWallets(potentialCosts);
+                money.readWallets(potentialCosts, file);
             }
 
             // простое меню
@@ -46,7 +45,7 @@ public class PotentialCosts extends Money {
                 case 2 -> Menu.addWallet(potentialCosts);     // Добавить
                 case 3 -> Menu.update(potentialCosts);        // Редактировать
                 case 4 -> Menu.delete(potentialCosts);        // Удалить
-                case 5 -> Menu.saveWallet(potentialCosts);    // Сохранить
+                case 5 -> Menu.saveWallet(potentialCosts, file);    // Сохранить
                 case 6 -> System.out.println("Bye");          // выход
                 default -> System.out.println("Invalid action");
             }

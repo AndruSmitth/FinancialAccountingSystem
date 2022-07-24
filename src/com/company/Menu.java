@@ -2,26 +2,27 @@ package com.company;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-import static com.company.Wallet.file;
+import static com.company.CreditCards.credit;
+import static com.company.Wallet.wallet;
+
 
 public class Menu {
 
     static Scanner in = new Scanner(System.in);
-    private static String tname;
-    private static int tsum;
+    static String tname;
+    static String tsum;
 
 
     static void update(ArrayList<Money> list) throws IOException {
         System.out.println("Введите имя: ");
         String unam = in.next();
         System.out.println("Сумму: ");
-        int unum = in.nextInt();
+        String unum = in.next();
         for (Money money : list) {
             if (money.getName().equals(unam)) {
-                money.setSum(Integer.parseInt(String.valueOf(unum)));
+                money.setSum(unum);
             }
         }
 
@@ -42,21 +43,26 @@ public class Menu {
 
     static void findAll(ArrayList<Money> list) {
         for (Money money: list) {
-            System.out.println(money.toString());
+            System.out.println(money);
         }
+        int sum = 0;
+        for (Money money: list) {
+            sum += Integer.parseInt(String.valueOf(money.getSum()));
+        }
+        System.out.println("Общая сумма = " + sum + "\n");
     }
 
     static void addWallet(ArrayList<Money> list) {
         System.out.println("Введите имя:");
         tname = in.next();
         System.out.println("Введите сумму:");
-        tsum = in.nextInt();
+        tsum = in.next();
         Money money = new Wallet(tname, tsum);
         list.add(money);
         System.out.println(money.toString());
     }
 
-    public void readWallets(ArrayList<Money> list) {
+    public static void readWallets(ArrayList<Money> list, String file) {
         FileInputStream filein;
         try {
             filein = new FileInputStream(file);
@@ -66,7 +72,11 @@ public class Menu {
                 BufferedReader br = new BufferedReader(new InputStreamReader(filein));
                 String line = null;
                 Money money = null;
+                while ((line = br.readLine()) != null) {
+                    String[] str = line.split(",");
+                    money = new Money(str[0], str[1]);
                     list.add(money);
+                 }
                 filein.close(); // Закрыть поток ввода байтов
                 br.close(); // Закрыть буфер депозита
                 System.out.println("Список загружен, вы можете выполнять операции с данными ...");
@@ -78,7 +88,7 @@ public class Menu {
         }
     }
 
-    public static void saveWallet(ArrayList<Money> list) {
+    public static void saveWallet(ArrayList<Money> list, String file) {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             for (Money money : list) {
@@ -91,6 +101,34 @@ public class Menu {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void sumAll() throws IOException {
+
+        File files = new File("wallet.txt");
+        if (!files.exists()) {
+            files.createNewFile();
+        } else {
+            readWallets(wallet,"wallet.txt");
+        }
+
+        int sumWalet = 0;
+        int sumCard = 0;
+        for (Money money:wallet) {
+            sumWalet += Integer.parseInt(String.valueOf(money.getSum()));
+        }
+
+        File files2 = new File("credit.txt");
+        if (!files.exists()) {
+            files2.createNewFile();
+        } else {
+            readWallets(credit,"credit.txt");
+        }
+
+        for (Money card:credit) {
+            sumCard += Integer.parseInt(String.valueOf(card.getSum()));
+        }
+        System.out.println("\nСумма всех карт и кошельков = " + (sumCard + sumWalet));
     }
 
 }

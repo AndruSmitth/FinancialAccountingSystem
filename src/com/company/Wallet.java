@@ -1,36 +1,28 @@
 package com.company;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//Класс кошельки
 public class Wallet extends Money {
 
     static String file = "wallet.txt";
     static ArrayList<Money> wallet = new ArrayList<>();
-    static Scanner in = new Scanner(System.in);
-    static boolean status = true;
-
 
     public Wallet(String name, String sum) {
         super(name, sum);
     }
 
+    public static void loader() throws IOException {
+        Menu.filesAll(wallet, file);
+    }
 
+    static void operatorWallet() throws IOException {
+        Scanner in = new Scanner(System.in);
+        int choice = 0;
 
-    public static void operatorWallet() throws IOException {
-
-        Menu money = new Menu();
-        File files = new File(file);
-        if (!files.exists()) {
-            files.createNewFile();
-        } else {
-            money.readWallets(wallet ,file);
-        }
-
-
-        while (status) {
+        while (choice != 6) {
             System.out.println("Работа с кошельком: ");
             System.out.println("1. Добавления кошелька");
             System.out.println("2. Удоление кошелька");
@@ -39,26 +31,23 @@ public class Wallet extends Money {
             System.out.println("5. Сохранение");
             System.out.println("6. Выход");
             System.out.print("-> ");
-            String selected = in.next();
-            switch (selected) {
 
-                case "1" -> Menu.addWallet(wallet);
-                case "2" -> Menu.delete(wallet);
-                case "3" -> Menu.update(wallet);
-                case "4" -> Menu.findAll(wallet);
-                case "5" -> Menu.saveWallet(wallet, file);
-                case "6" -> {
-                //    in.close();
-                    status = false;
-                    break;
-                }
-                default -> System.out.println("Выход");
+            choice = in.nextInt();
+            switch (choice) {
 
+                case 1 -> Menu.addWallet(wallet);
+                case 2 -> Menu.delete(wallet);
+                case 3 -> Menu.update(wallet);
+                case 4 -> Menu.findAll(wallet);
+                case 5 -> Menu.saveWallet(wallet, file);
+                case 6 -> System.out.println("Bye");          // выход
+                default -> System.out.println("Invalid action");
             }
+
         }
     }
-
-
 }
+
+
 
 

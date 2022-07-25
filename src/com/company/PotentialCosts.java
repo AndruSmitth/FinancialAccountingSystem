@@ -1,10 +1,10 @@
 package com.company;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//Потенциальные Затраты
 public class PotentialCosts extends Money {
     static String file = "potentialCosts.txt";
     static ArrayList<Money> potentialCosts = new ArrayList<>(); //Потенциальные затраты
@@ -16,17 +16,12 @@ public class PotentialCosts extends Money {
         super(name, sum);
     }
 
+    public static void loader() throws IOException {
+        Menu.filesAll(potentialCosts, file);
+    }
 
     public static void operatorPotentialCosts() throws IOException {
         while (choice != 6) {
-
-            Menu money = new Menu();
-            File files = new File(file);
-            if (!files.exists()) {
-                files.createNewFile();
-            } else {
-                money.readWallets(potentialCosts, file);
-            }
 
             // простое меню
             System.out.println("Потенциальные Затраты: ");

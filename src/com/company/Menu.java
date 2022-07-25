@@ -14,7 +14,18 @@ public class Menu {
     static String tname;
     static String tsum;
 
+    // проверка на наличие файла
+    // если файла нет он создаеться
+    static void filesAll(ArrayList<Money> list, String file) throws IOException {
+        File files = new File(file);
+        if (!files.exists()) {
+            files.createNewFile();
+        } else {
+            readWallets(list, file);
+        }
+    }
 
+    // редактирование
     static void update(ArrayList<Money> list) throws IOException {
         System.out.println("Введите имя: ");
         String unam = in.next();
@@ -25,9 +36,9 @@ public class Menu {
                 money.setSum(unum);
             }
         }
-
     }
 
+    //удаление
     static void delete(ArrayList<Money> list) {
         System.out.println("Введите имя: ");
         String dname = in.next();
@@ -41,6 +52,7 @@ public class Menu {
         }
     }
 
+    // чтение списка коллекций
     static void findAll(ArrayList<Money> list) {
         for (Money money: list) {
             System.out.println(money);
@@ -52,6 +64,7 @@ public class Menu {
         System.out.println("Общая сумма = " + sum + "\n");
     }
 
+    //добавление
     static void addWallet(ArrayList<Money> list) {
         System.out.println("Введите имя:");
         tname = in.next();
@@ -62,6 +75,7 @@ public class Menu {
         System.out.println(money.toString());
     }
 
+    //чтение файла в коллекцию
     public static void readWallets(ArrayList<Money> list, String file) {
         FileInputStream filein;
         try {
@@ -88,6 +102,7 @@ public class Menu {
         }
     }
 
+    //сохранение и запись списка в файл
     public static void saveWallet(ArrayList<Money> list, String file) {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
@@ -103,26 +118,13 @@ public class Menu {
         }
     }
 
+    //суммирование всех кошельков и карт.
     public static void sumAll() throws IOException {
-
-        File files = new File("wallet.txt");
-        if (!files.exists()) {
-            files.createNewFile();
-        } else {
-            readWallets(wallet,"wallet.txt");
-        }
 
         int sumWalet = 0;
         int sumCard = 0;
         for (Money money:wallet) {
             sumWalet += Integer.parseInt(String.valueOf(money.getSum()));
-        }
-
-        File files2 = new File("credit.txt");
-        if (!files.exists()) {
-            files2.createNewFile();
-        } else {
-            readWallets(credit,"credit.txt");
         }
 
         for (Money card:credit) {

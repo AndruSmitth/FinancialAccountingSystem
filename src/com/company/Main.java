@@ -6,11 +6,18 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+
+        //загрузка колекций из файла.
+        Costs.loader();
+        PotentialCosts.loader();
+        Incomes.loader();
+        Wallet.loader();
+        CreditCards.loader();
+
         Scanner in = new Scanner(System.in);
-        boolean status = true;
+        int choice = 0;
 
-
-        while (status) {
+        while (choice != 7) {
             System.out.println("1. Работа с картой");
             System.out.println("2. Работа с кошельком");
             System.out.println("3. текущие затраты");
@@ -19,24 +26,23 @@ public class Main {
             System.out.println("6. Сумма кошельков и карт");
             System.out.println("7. Выход");
             System.out.print("-> ");
-            String selected = in.next();
-            switch (selected) {
 
-                case "1" -> CreditCards.operatorCredit();
-                case "2" -> Wallet.operatorWallet();
-                case "3" -> Costs.operatorCosts();
-                case "4" -> PotentialCosts.operatorPotentialCosts();
-                case "5" -> Incomes.operatorIncomes();
-                case "6" -> Menu.sumAll();
-                case "7" -> {
-                 //   in.close();
-                    status = false;
-                    break;
-                }
-                default -> System.out.println("Выход");
+            choice = in.nextInt();
+            switch (choice) {
 
+                case 1 -> CreditCards.operatorCredit();                  //Работа с картой
+                case 2 -> Wallet.operatorWallet();                       // Работа с кошельком
+                case 3 -> Costs.operatorCosts();                         //текущие затраты
+                case 4 -> PotentialCosts.operatorPotentialCosts();       //потенциальные затраты
+                case 5 -> Incomes.operatorIncomes();                     //потенциальные доходы
+                case 6 -> Menu.sumAll();                                 //Сумма кошельков и карт
+                case 7 -> System.out.println("Bye");                     // выход
+                default -> System.out.println("Invalid action");
             }
-        }
 
+
+        }
     }
+
 }
+

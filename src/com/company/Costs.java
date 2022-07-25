@@ -1,10 +1,10 @@
 package com.company;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//Текущие затраты
 public class Costs extends Money {
     static String file = "costs.txt";
     static ArrayList<Money> costs = new ArrayList<>(); //Расходы
@@ -16,20 +16,13 @@ public class Costs extends Money {
         super(name, sum);
     }
 
-
+    public static void loader() throws IOException {
+        Menu.filesAll(costs, file);
+    }
 
 
     public static void operatorCosts() throws IOException {
         while (choice != 6) {
-
-            Menu money = new Menu();
-            File files = new File(file);
-            if (!files.exists()) {
-                files.createNewFile();
-            } else {
-                money.readWallets(costs, file);
-            }
-
             // простое меню
             System.out.println("Текущие затраты: ");
             System.out.println("1 - Посмотреть");
@@ -38,10 +31,9 @@ public class Costs extends Money {
             System.out.println("4 - Удалить");
             System.out.println("5 - Сохранить");
             System.out.println("6 - Выход");
-
             System.out.print("Action: ");
-            choice = sc.nextInt();
 
+            choice = sc.nextInt();
             switch (choice) {
                 case 1 -> Menu.findAll(costs);       // Посмотреть
                 case 2 -> Menu.addWallet(costs);     // Добавить

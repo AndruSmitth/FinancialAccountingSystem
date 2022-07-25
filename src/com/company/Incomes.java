@@ -1,11 +1,10 @@
 package com.company;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
+//Потенциальные доходы
 public class Incomes extends Money {
     static String file = "incomes.txt";
     static ArrayList<Money> incomes = new ArrayList<>(); //Доходы
@@ -17,17 +16,12 @@ public class Incomes extends Money {
         super(name, sum);
     }
 
+    public static void loader() throws IOException {
+        Menu.filesAll(incomes, file);
+    }
 
     public static void operatorIncomes() throws IOException {
         while (choice != 6) {
-
-            Menu money = new Menu();
-            File files = new File(file);
-            if (!files.exists()) {
-                files.createNewFile();
-            } else {
-                money.readWallets(incomes, file);
-            }
 
             // простое меню
             System.out.println("Потенциальные доходы: ");
